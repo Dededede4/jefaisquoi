@@ -1,0 +1,57 @@
+{% extends "::base.html.twig" %}
+
+{% block body %}
+		<div class="vertical-center page-creative">
+			<div class="container">
+				<div class="jumbotron">
+					<span class="pull-right"><a href="{{ path('homepage') }}">Revenir au mode survie</a></span>
+					<ul class="nav nav-tabs">
+  						<li role="presentation" class="{% if app.request.get('_route') == 'creative_stats' %}active{%endif%}"><a href="{{ path('creative_stats') }}">Statistiques</a></li>
+  						<li role="presentation" class="{% if app.request.get('_route') == 'creative_contribute' %}active{%endif%}"><a href="{{ path('creative_contribute') }}">Contribuer</a></li>
+  						<li role="presentation"><a href="{{ path('creative_moderate') }}">Modérer</a></li>
+					</ul>
+					<h2>Ce site comporte {{ nbr_questions }} situations validées.<br/><small>{{ nbr_questions_wait }} ne sont pas encore validées<br/><br/>Voici les 5 dernière validées :</small></h2>
+					<hr>
+					{% for Question in questions %}
+						<p>{{ Question.text }}<br/>
+						
+						{% if Question.dead %}
+							<small>Le personnage meurt.</msall>
+						{% else %}
+							<ul>
+							{% for Reponse in Question.reponses %}
+							  		<li>{{ Reponse.text }}</li>
+						  	{% endfor %}
+					  		</ul>
+					  	{% endif %}
+					  	</p>
+					  	<i>Le {{ Question.date | date('d/m/Y H:i') }}, merci à {{ Question.username }}</i>
+					  	<hr>
+					{% endfor %}
+				</div>
+
+			{#
+				{% if Question.Reponse and Question.Reponse.Question %}
+					<div class="jumbotron">
+						<h3>{{ Question.Reponse.Question.text }}<br/>
+						<small>→ {{ Question.Reponse.text }}</small></h3>
+					</div>
+				{% endif %}
+				
+			  		<h1>{{ Question.text }}<br/><small>{% if Question.dead %}Vous êtes mort.{% else %}Je fais quoi ?{% endif %}</small></h1>
+			  		<hr>
+			  			{% if not Question.dead %}
+					  		{% for Reponse in Question.reponses %}
+						  		<p><a class="btn btn-default btn-lg btn-block text-left" href="{{ path('next', {'game_id': game_id, 'id': Reponse.id, 'test_hash': valid_hash}) }}" role="button">{{ Reponse.text }}</a></p>
+					  		{% endfor %}
+					  	{% else %}
+					  		<p><a class="btn btn-default btn-lg btn-block" href="{{ path('homepage') }}" role="button">Réessayer</a></p>
+					  	{% endif %}
+				  		<hr>
+				  		Votre score : {{ score }}
+				</div>
+				#}
+			 </div>
+		</div>
+
+{% endblock %}

@@ -1,0 +1,7 @@
+
+<h4>{{ Reponse.Question.text }}</h4>
+<ul><p>→ {{ Reponse.text }}</p></ul>
+<hr>
+{% if Reponse.Question.Reponse %}
+	{% include 'AppBundle:moderate:_upTree.html.twig' with {'Reponse': Reponse.Question.Reponse} %}
+{% endif %}

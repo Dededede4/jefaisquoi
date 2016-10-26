@@ -1,0 +1,46 @@
+
+{% extends "::base.html.twig" %}
+
+{% block body %}
+		<div class="vertical-center page-creative">
+			<div class="container">
+				<div class="jumbotron">
+					<span class="pull-right"><a href="{{ path('homepage') }}">Revenir au mode survie</a></span>
+					<ul class="nav nav-tabs">
+  						<li role="presentation" class="{% if app.request.get('_route') == 'creative_stats' %}active{%endif%}"><a href="{{ path('creative_stats') }}">Statistiques</a></li>
+  						<li role="presentation" class="{% if app.request.get('_route') == 'creative_contribute' %}active{%endif%}"><a href="{{ path('creative_contribute') }}">Contribuer</a></li>
+  						<li role="presentation" class="active"><a href="{{ path('creative_moderate') }}">Modérer</a></li>
+					</ul>
+					<h2>Validez-vous cette situation ?</h2>
+					<hr>
+						<h4>{{ Question.text }}<br/>{% if not Question.dead %}<small>Je fais quoi ?</small>{% endif %}</h4>
+						<ul>
+						{% if Question.dead %}
+							<p>Le personnage meurt</p>
+						{% endif %}
+						{% for Reponse in Question.reponses %}
+						  		<p>→ {{ Reponse.text }}</p>
+					  	{% endfor %}
+					  	</ul>
+					  	</p>
+					  	<hr>
+					  	<div class="row">
+						<div class="col-sm-6">
+							{{ form_start(formPour) }}
+			    				<input type="submit" class="btn btn-default btn-lg btn-block" value="OUI"/>
+							{{ form_end(formPour) }}
+						</div>
+						<div class="col-sm-6">
+							{{ form_start(formContre) }}
+			    				<input type="submit" class="btn btn-default btn-lg btn-block" value="NON"/>
+							{{ form_end(formContre) }}
+						</div>
+					</div>
+					<hr>
+					  	<p>Situations précédentes :</p>
+					  	{% include 'AppBundle:moderate:_upTree.html.twig' with {'Reponse': Question.reponse} %}
+				</div>
+			 </div>
+		</div>
+
+{% endblock %}

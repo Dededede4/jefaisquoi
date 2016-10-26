@@ -1,0 +1,89 @@
+{% extends "::base.html.twig" %}
+
+
+{% block body %}
+	<div class="vertical-center">
+		<div class="container">
+			{% if parent_Reponse.Question and parent_Reponse.Question.reponse %}
+				<div class="jumbotron">
+					{% if score == 0 %}
+						<h3>{{ parent_Reponse.Question.reponse.Question.text }}<br/>
+						<small>→ {{ parent_Reponse.Question.reponse.text }}</small></h3>
+					{% endif %}
+					<h3>{{ parent_Reponse.Question.text }}<br/>
+					<small>→ {{ parent_Reponse.text }}</small></h3>
+				</div>
+			{% endif %}
+
+			<div class="jumbotron">
+		  		{% if score > 0 %}<h1>L'histoire s'arrête ici !<br/><small>Votre score est de {{ score }}, continuez l'histoire :</small></h1>
+		  		{% else %}<h1>Continuez l'histoire :</h1>{% endif %}
+		  		<hr>
+		  		{% if errors %}
+			    			<div class="alert alert-danger">
+				    			{% for errMsg in errors %}
+									  <p>{{ errMsg }}</p>
+				    			{% endfor %}
+			    			</div>
+			    		{% endif %}
+		  			{{ form_start(form) }}
+
+			    		{{ form_row(form.text, {'label': 'Écrivez la nouvelle situation', 'attr': {'class': 'form-control'}}) }}
+
+			    		
+			    		<h3>Écrivez entre deux et quatre choix.</h3>
+
+			    		{{ form_widget(form.dead)}}
+			    		{{ form_label(form.dead, 'Aucun choix. Le visiteur meurt à ce moment.') }}
+			    		<table>
+			    			<tr>
+			    				<td>{{ form_label(form.reponses[0].text, 'Première réponse') }}</td>
+			    				<td>{{ form_widget(form.reponses[0].text, {'attr': {'class': 'form-control noDead'}})}}</td>
+			    			</tr>
+			    			<tr>
+			    				<td>{{ form_label(form.reponses[1].text, 'Deuxième réponse') }}</td>
+			    				<td>{{ form_widget(form.reponses[1].text, {'attr': {'class': 'form-control noDead'}})}}</td>
+			    			</tr>
+			    			<tr>
+			    				<td>{{ form_label(form.reponses[2].text, 'Troisième réponse') }}</td>
+			    				<td>{{ form_widget(form.reponses[2].text, {'attr': {'class': 'form-control noDead'}})}}</td>
+			    			</tr>
+			    			<tr>
+			    				<td>{{ form_label(form.reponses[3].text, 'Quatrième réponse') }}</td>
+			    				<td>{{ form_widget(form.reponses[3].text, {'attr': {'class': 'form-control noDead'}})}}</td>
+			    			</tr>
+			    		</table>
+
+			    		<h3>Qui êtes-vous ?</h3>
+			    		{{ form_row(form.username, {'label': 'Votre nom d\'utilisateur', 'attr': {'class': 'form-control'}}) }}
+			    		{{ form_row(form.mail, {'label': 'Votre mail', 'attr': {'class': 'form-control'}}) }}
+
+			    		<hr>
+			    		<input type="submit" class="btn btn-default btn-lg btn-block"/>
+					{{ form_end(form) }}
+
+			</div>
+		 </div>
+	</div>
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+
+	<script>
+		function actualiseForm(){
+			var isChecked = document.getElementById('question_dead').checked;
+			var x = document.getElementsByClassName('noDead');
+			for (var i = 0; i < x.length; i++) {
+			    x[i].disabled = isChecked;
+			    if (isChecked)
+			    {
+			    	x[i].value = '';
+			    }
+			}
+		}
+		document.getElementById('question_dead').onchange = actualiseForm;
+		actualiseForm();
+	</script>
+		
+{% endblock %}

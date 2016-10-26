@@ -1,0 +1,54 @@
+{% extends "::base.html.twig" %}
+
+{% block body %}
+
+	<div class="vertical-center">
+		<div class="container">
+			{% if not accueil %}
+				<div class="jumbotron">
+					<h3>{{ Question.Reponse.Question.text }}<br/>
+					<small>→ {{ Question.Reponse.text }}</small></h3>
+				</div>
+			{% endif %}
+			<div class="jumbotron">
+		  		<h1>{{ Question.text }}<br/><small>{% if Question.dead %}Vous êtes mort.{% else %}Je fais quoi ?{% endif %}</small></h1>
+		  		<hr>
+		  			{% if not Question.dead %}
+				  		{% for Reponse in Question.reponses %}
+					  		<p><a class="btn btn-default btn-lg btn-block text-left" href="{{ path('next', {'game_id': game_id, 'id': Reponse.id, 'test_hash': valid_hash}) }}" role="button">{{ Reponse.text }}</a></p>
+				  		{% endfor %}
+				  	{% else %}
+				  		<p><a class="btn btn-default btn-lg btn-block" href="{{ path('homepage') }}" role="button">Réessayer</a></p>
+				  	{% endif %}
+			  		<hr>
+			  		Votre score : {{ score }}
+			  		{% if accueil %}
+			  			<span class="pull-right"><a href="{{ path('creative_stats') }}">Passer en mode créatif</a></span>
+			  		{% endif %}
+
+
+			  		{% if accueil %}
+			  			<hr>
+			  		
+					  		<!-- Load Facebook SDK for JavaScript -->
+					  		<div class="fb-like" style="margin:auto; width:325px; display:block;" data-href="https://www.facebook.com/jefaisquoifr-1739176436345034/?fref=ts" data-layout="standard" data-action="like" data-size="small" data-show-faces="false" data-share="true" colorscheme="dark"></div>
+
+							<div id="fb-root"></div>
+							<script>(function(d, s, id) {
+							  var js, fjs = d.getElementsByTagName(s)[0];
+							  if (d.getElementById(id)) return;
+							  js = d.createElement(s); js.id = id;
+							  js.src = "//connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v2.7";
+							  fjs.parentNode.insertBefore(js, fjs);
+							}(document, 'script', 'facebook-jssdk'));</script>
+					{% else %}
+						{#
+						<iframe src="//rcm-eu.amazon-adsystem.com/e/cm?t=jefaisquoifr-21&o=8&p=26&l=ur1&category=games&banner=0VW352M96JTRQKZQ0Q02&f=ifr" width="468" height="60" scrolling="no" border="0" marginwidth="0" style="border:none;max-width:800px;max-height:600px;" frameborder="0"></iframe>
+						#}
+						<iframe class="pull-right" src="//rcm-eu.amazon-adsystem.com/e/cm?t=jefaisquoifr-21&o=8&p=13&l=ez&f=ifr&f=ifr&internal=1" width="468" height="60" scrolling="no" marginwidth="0" marginheight="0" border="0" frameborder="0" style="border:none;max-width:800px;max-height:600px;"></iframe>
+					{% endif %}
+			</div>
+		 </div>
+	</div>
+
+{% endblock %}

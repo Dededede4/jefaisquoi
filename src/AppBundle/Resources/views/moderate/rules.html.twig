@@ -1,0 +1,32 @@
+{% extends "::base.html.twig" %}
+
+{% block body %}
+		<div class="vertical-center page-creative">
+			<div class="container">
+				<div class="jumbotron">
+					<span class="pull-right"><a href="{{ path('homepage') }}">Revenir au mode survie</a></span>
+					<ul class="nav nav-tabs">
+  						<li role="presentation" class="{% if app.request.get('_route') == 'creative_stats' %}active{%endif%}"><a href="{{ path('creative_stats') }}">Statistiques</a></li>
+  						<li role="presentation" class="{% if app.request.get('_route') == 'creative_contribute' %}active{%endif%}"><a href="{{ path('creative_contribute') }}">Contribuer</a></li>
+  						<li role="presentation" class="active"><a href="{{ path('creative_moderate') }}">Modérer</a></li>
+					</ul>
+					<h3>Devenez modérateur en vous connectant sur facebook</h3>
+					
+
+					<p>Tout le monde peut facilement être modérateur sur ce site : <br/>
+					Une fois connecté, nous vous montrerons une situation à valider, vous pourrez dire votre avis.</p>
+					<hr>
+					<ul>
+						<li><p>Si vous cliquez sur OUI alors qu'une question n'est pas correcte, votre compte sera désactivé (vous avez le droit à l'erreur).</p></li>
+						<li><p>Essayez de refuser les questions avec des références culturelles trop récurrantes ou pas adaptés (La réponse D ; ISSOU)</p></li>
+						<li><p>Vous pouvez accepter les sujets sensibles (sexe, religion, politique, …) si c'est dans l'humour.</p></li>
+						<li><p>Essayez de refuser les questions avec des choix "doublons" ( Réponse 3 : aller derrière, réponse 4 : reculer )</p></li>
+						<li><p>Ne pas hésiter de tuer le joueur. (si la situation reste correcte)</p></li>
+					</ul>
+					<hr>
+					<p><a class="btn btn-default btn-lg" href="{{ path('connect_facebook') }}">Accepter et se connecter avec facebook</a>
+				</div>
+			 </div>
+		</div>
+
+{% endblock %}

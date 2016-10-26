@@ -1,0 +1,21 @@
+
+{% extends "::base.html.twig" %}
+
+{% block body %}
+		<div class="vertical-center page-creative">
+			<div class="container">
+				<div class="jumbotron">
+					<span class="pull-right"><a href="{{ path('homepage') }}">Revenir au mode survie</a></span>
+					<ul class="nav nav-tabs">
+  						<li role="presentation" class="{% if app.request.get('_route') == 'creative_stats' %}active{%endif%}"><a href="{{ path('creative_stats') }}">Statistiques</a></li>
+  						<li role="presentation" class="{% if app.request.get('_route') == 'creative_contribute' %}active{%endif%}"><a href="{{ path('creative_contribute') }}">Contribuer</a></li>
+  						<li role="presentation" class="active"><a href="{{ path('creative_moderate') }}">Modérer</a></li>
+					</ul>
+					<h3>Il n'y a plus de situations à valider !</h3>
+					<p>Merci beaucoup, repassez plus tard.</p>
+
+				</div>
+			 </div>
+		</div>
+
+{% endblock %}
